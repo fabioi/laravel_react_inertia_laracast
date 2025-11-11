@@ -13,9 +13,9 @@ export async function getPuppies() {
         const errorData = await response.json();
         throw errorData;
     }
-    const { data } = await response.json();
-    return data;
+    // Some backends return the array directly, others wrap it in a { data } envelope.
     const json = await response.json();
+    return json;
 }
 
 // ------------------------------
