@@ -1,5 +1,8 @@
 import { Puppy } from "../types";
 
+// ------------------------------
+// Get a list of puppies
+// ------------------------------
 export async function getPuppies() {
     const response = await fetch("http://localhost:3001/api/puppies", {
         headers: {
@@ -14,6 +17,9 @@ export async function getPuppies() {
     return data;
 }
 
+// ------------------------------
+// Add/remove from shortlist
+// ------------------------------
 export async function toggleLikedStatus(id: Puppy["id"]) {
     const response = await fetch(
         `http://localhost:3001/api/puppies/${id}/like`,
@@ -32,6 +38,9 @@ export async function toggleLikedStatus(id: Puppy["id"]) {
     return data;
 }
 
+// ------------------------------
+// Add a new puppy
+// ------------------------------
 export async function createPuppy(formData: FormData) {
     const response = await fetch("http://localhost:3001/api/puppies", {
         method: "POST",

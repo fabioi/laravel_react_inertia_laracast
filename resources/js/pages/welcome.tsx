@@ -1,16 +1,16 @@
-import { PageWrapper } from "@/components/PageWrapper";
 import { Container } from "@/components/Container";
 import { Header } from "@/components/Header";
+import { NewPuppyForm } from "@/components/NewPuppyForm";
+import { PageWrapper } from "@/components/PageWrapper";
+import { PuppiesList } from "@/components/PuppiesList";
 import { Search } from "@/components/Search";
 import { Shortlist } from "@/components/Shortlist";
-import { PuppiesList } from "@/components/PuppiesList";
-import { NewPuppyForm } from "@/components/NewPuppyForm";
 
-import { Suspense, use, useState } from "react";
-import { Puppy } from "@/types";
 import { LoaderCircle } from "lucide-react";
-import { getPuppies } from "@/queries";
+import { Suspense, use, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { getPuppies } from "@/queries";
+import { Puppy } from "@/types";
 
 export default function App() {
     return (
@@ -51,7 +51,10 @@ function Main() {
     return (
         <main>
             <div className="mt-24 grid gap-8 sm:grid-cols-2">
-                <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+                <Search
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                />
                 <Shortlist puppies={puppies} setPuppies={setPuppies} />
             </div>
             <PuppiesList
