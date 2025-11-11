@@ -6,7 +6,6 @@ import { Shortlist } from "@/components/Shortlist";
 import { PuppiesList } from "@/components/PuppiesList";
 import { NewPuppyForm } from "@/components/NewPuppyForm";
 
-import { puppies as puppiesData } from "./data/puppies";
 import { Suspense, use, useState } from "react";
 import { Puppy } from "@/types";
 import { LoaderCircle } from "lucide-react";
