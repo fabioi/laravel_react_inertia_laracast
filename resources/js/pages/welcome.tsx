@@ -12,7 +12,7 @@ import { LoaderCircle } from "lucide-react";
 import { getPuppies } from "@/queries";
 import { ErrorBoundary } from "react-error-boundary";
 
-export function App() {
+export default function App() {
     return (
         <PageWrapper>
             <Container>
