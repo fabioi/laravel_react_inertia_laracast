@@ -1,7 +1,7 @@
 import { Puppy } from "../types";
 
 export async function getPuppies() {
-    const response = await fetch("http://react-from-scratch-api.test/api/puppies", {
+    const response = await fetch("http://localhost:3001/api/puppies", {
         headers: {
             accept: "application/json",
         },
@@ -16,7 +16,7 @@ export async function getPuppies() {
 
 export async function toggleLikedStatus(id: Puppy["id"]) {
     const response = await fetch(
-        `http://react-from-scratch-api.test/api/puppies/${id}/like`,
+        `http://localhost:3001/api/puppies/${id}/like`,
         {
             method: "PATCH",
             headers: {
@@ -33,7 +33,7 @@ export async function toggleLikedStatus(id: Puppy["id"]) {
 }
 
 export async function createPuppy(formData: FormData) {
-    const response = await fetch("http://react-from-scratch-api.test/api/puppies", {
+    const response = await fetch("http://localhost:3001/api/puppies", {
         method: "POST",
         body: formData,
         headers: {
