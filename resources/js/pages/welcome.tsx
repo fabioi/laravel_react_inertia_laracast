@@ -46,7 +46,8 @@ const puppyPromise = getPuppies();
 function Main() {
     const apiPuppies = use(puppyPromise);
     const [searchQuery, setSearchQuery] = useState("");
-    const [puppies, setPuppies] = useState<Puppy[]>(apiPuppies);
+    // Defensive default to ensure downstream components always receive an array
+    const [puppies, setPuppies] = useState<Puppy[]>(apiPuppies ?? []);
 
     return (
         <main>

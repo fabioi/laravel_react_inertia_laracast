@@ -15,6 +15,7 @@ export async function getPuppies() {
     }
     const { data } = await response.json();
     return data;
+    const json = await response.json();
 }
 
 // ------------------------------
