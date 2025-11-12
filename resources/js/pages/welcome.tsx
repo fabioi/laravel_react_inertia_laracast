@@ -1,22 +1,29 @@
-import { Container } from "@/components/Container";
-import { Header } from "@/components/Header";
-import { NewPuppyForm } from "@/components/NewPuppyForm";
-import { PageWrapper } from "@/components/PageWrapper";
-import { PuppiesList } from "@/components/PuppiesList";
-import { Search } from "@/components/Search";
-import { Shortlist } from "@/components/Shortlist";
+import { Container } from '@/components/Container';
+import { Header } from '@/components/Header';
+import { NewPuppyForm } from '@/components/NewPuppyForm';
+import { PageWrapper } from '@/components/PageWrapper';
+import { PuppiesList } from '@/components/PuppiesList';
+import { Search } from '@/components/Search';
+import { Shortlist } from '@/components/Shortlist';
 
-import { LoaderCircle } from "lucide-react";
-import { Suspense, use, useState } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import { getPuppies } from "@/queries";
-import { Puppy } from "@/types";
+import { getPuppies } from '@/queries';
+import { Puppy } from '@/types';
+import { LoaderCircle } from 'lucide-react';
+import { Suspense, use, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
-export default function App() {
+export default function App({ puppies }: { puppies: Puppy[] }) {
     return (
         <PageWrapper>
             <Container>
                 <Header />
+
+                {puppies.map((puppy) => (
+                    <div className="bg-white p-6 ring ring-black/10">
+                        <h2>{puppy.name}</h2>
+                    </div>
+                ))}
+
                 <ErrorBoundary
                     fallbackRender={({ error }) => (
                         <div className="mt-12 bg-red-100 p-6 shadow ring ring-black/5">
@@ -45,7 +52,7 @@ const puppyPromise = getPuppies();
 
 function Main() {
     const apiPuppies = use(puppyPromise);
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState('');
     // Defensive default to ensure downstream components always receive an array
     const [puppies, setPuppies] = useState<Puppy[]>(apiPuppies ?? []);
 
