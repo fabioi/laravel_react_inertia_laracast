@@ -17,12 +17,17 @@ export default function App({ puppies }: { puppies: Puppy[] }) {
         <PageWrapper>
             <Container>
                 <Header />
-
-                {puppies.map((puppy) => (
-                    <div className="bg-white p-6 ring ring-black/10">
-                        <h2>{puppy.name}</h2>
-                    </div>
-                ))}
+                <ul className="mt-4 flex flex-wrap gap-4">
+                    {puppies.map((puppy) => (
+                        <li
+                            key={puppy.id}
+                            className="flex gap-2 bg-white p-6 ring ring-black/10"
+                        >
+                            <img src={puppy.imageUrl} alt={puppy.name} className="size-24 object-cover"/>
+                            <h2>{puppy.name}</h2>
+                        </li>
+                    ))}
+                </ul>
 
                 <ErrorBoundary
                     fallbackRender={({ error }) => (
