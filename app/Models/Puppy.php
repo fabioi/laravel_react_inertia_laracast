@@ -14,7 +14,7 @@ class Puppy extends Model
 
     protected $guarded = [];
 
-    public function user():BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -23,6 +23,4 @@ class Puppy extends Model
     {
         return $this->belongsToMany(User::class);
     }
-
-
 }
