@@ -48,4 +48,16 @@ export interface Puppy {
     trait: string;
     imageUrl: string;
     user: Pick<User, 'id' | 'name'>;
+    likedBy: Pick<User, 'id' | 'name'>[];
 };
+
+// Vite environment variable typings
+interface ImportMetaEnv {
+    readonly VITE_PUPPIES_API_URL_CLIENT?: string;
+    readonly VITE_PUPPIES_API_URL_SSR?: string;
+    readonly SSR?: boolean;
+}
+
+interface ImportMeta {
+    readonly env: ImportMetaEnv;
+}

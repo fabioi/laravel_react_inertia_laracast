@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
 import { type Puppy } from '@/types';
+import { Dispatch, SetStateAction } from "react";
 import { LikeToggle } from "./LikeToggle";
 
 export function PuppiesList({
