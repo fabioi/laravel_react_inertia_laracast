@@ -48,7 +48,7 @@ export interface Puppy {
     trait: string;
     imageUrl: string;
     user: Pick<User, 'id' | 'name'>;
-    likedBy: Pick<User, 'id' | 'name'>[];
+    likedBy: number[];
 };
 
 // Vite environment variable typings

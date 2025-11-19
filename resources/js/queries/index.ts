@@ -1,22 +1,22 @@
 import { Puppy } from "../types";
 
-// ------------------------------
-// Get a list of puppies
-// ------------------------------
-export async function getPuppies() {
-    const response = await fetch("http://localhost:3001/api/puppies", {
-        headers: {
-            accept: "application/json",
-        },
-    });
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw errorData;
-    }
-    // Some backends return the array directly, others wrap it in a { data } envelope.
-    const json = await response.json();
-    return json;
-}
+// // ------------------------------
+// // Get a list of puppies
+// // ------------------------------
+// export async function getPuppies() {
+//     const response = await fetch("http://localhost:3001/api/puppies", {
+//         headers: {
+//             accept: "application/json",
+//         },
+//     });
+//     if (!response.ok) {
+//         const errorData = await response.json();
+//         throw errorData;
+//     }
+//     // Some backends return the array directly, others wrap it in a { data } envelope.
+//     const json = await response.json();
+//     return json;
+// }
 
 // ------------------------------
 // Add/remove from shortlist
