@@ -1,5 +1,5 @@
-import { InertiaLinkProps } from '@inertiajs/react';
 import { LucideIcon } from 'lucide-react';
+import type { Config } from 'ziggy-js';
 
 export interface Auth {
     user: User;
@@ -17,7 +17,7 @@ export interface NavGroup {
 
 export interface NavItem {
     title: string;
-    href: NonNullable<InertiaLinkProps['href']>;
+    href: string;
     icon?: LucideIcon | null;
     isActive?: boolean;
 }
@@ -26,6 +26,7 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    ziggy: Config & { location: string };
     sidebarOpen: boolean;
     [key: string]: unknown;
 }
@@ -36,7 +37,6 @@ export interface User {
     email: string;
     avatar?: string;
     email_verified_at: string | null;
-    two_factor_enabled?: boolean;
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
@@ -48,16 +48,5 @@ export interface Puppy {
     trait: string;
     imageUrl: string;
     user: Pick<User, 'id' | 'name'>;
-    likedBy: number[];
-};
-
-// Vite environment variable typings
-interface ImportMetaEnv {
-    readonly VITE_PUPPIES_API_URL_CLIENT?: string;
-    readonly VITE_PUPPIES_API_URL_SSR?: string;
-    readonly SSR?: boolean;
-}
-
-interface ImportMeta {
-    readonly env: ImportMetaEnv;
+    likedBy: User['id'][];
 }

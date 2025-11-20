@@ -8,20 +8,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
         Schema::create('puppy_user', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Puppy::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-
-            $table->unique(['puppy_id', 'user_id'], 'puppy_user_unique_index');
-
             $table->timestamps();
+
+            $table->unique(['puppy_id', 'user_id'], 'puppy_user_unique');
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('puppy_user');
     }
