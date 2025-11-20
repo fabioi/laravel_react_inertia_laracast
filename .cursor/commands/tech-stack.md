@@ -1,0 +1,5 @@
+# tech-stack
+
+this is a laravel 12 project with inertia.js and react running on laravel sail.
+
+MCP laravel boost is available for this project.
