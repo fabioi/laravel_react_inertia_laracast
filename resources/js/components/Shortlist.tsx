@@ -48,6 +48,7 @@ function DeleteButton({
   const {patch, processing} = useForm();
   return (
     <form 
+    className="h-full"
     method="patch"
     action={route('puppies.like', id)}
     onSubmit={(e) => {
