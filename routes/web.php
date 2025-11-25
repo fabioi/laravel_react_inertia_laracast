@@ -1,16 +1,10 @@
 <?php
 
-use App\Http\Resources\PuppyResource;
-use App\Models\Puppy;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PuppyController;
 
-Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'puppies' => PuppyResource::collection(Puppy::all()->load(['user', 'likedBy'])),
-    ]);
-})->name('home');
+Route::get('/', [PuppyController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
