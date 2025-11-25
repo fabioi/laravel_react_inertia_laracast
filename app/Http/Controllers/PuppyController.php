@@ -11,7 +11,7 @@ class PuppyController extends Controller
 {
     public function index()
     {
-        return Inertia::render('welcome', [
+        return Inertia::render('puppies/index', [
             'puppies' => PuppyResource::collection(Puppy::all()->load(['user', 'likedBy'])),
         ]);
     }
