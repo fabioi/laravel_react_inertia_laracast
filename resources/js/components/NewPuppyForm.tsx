@@ -20,9 +20,25 @@ export function NewPuppyForm({
       >
         <form
           action={async (formData: FormData) => {
-            const response = await createPuppy(formData);
-            if (response.data) {
-              setPuppies([...puppies, response.data]);
+            // #region agent log
+            const logEndpoint = 'http://127.0.0.1:7242/ingest/a4d1678e-921e-4a1e-9e4e-ae5c13838901';
+            fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'components/NewPuppyForm.tsx:23',message:'form action called',data:{name:formData.get('name'),origin:window.location.origin},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+            // #endregion
+            try {
+              const response = await createPuppy(formData);
+              // #region agent log
+              fetch('http://127.0.0.1:7242/ingest/a4d1678e-921e-4a1e-9e4e-ae5c13838901',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'components/NewPuppyForm.tsx:26',message:'createPuppy completed',data:{hasData:!!response.data},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+              // #endregion
+              if (response.data) {
+                setPuppies([...puppies, response.data]);
+              }
+            } catch (error) {
+              // #region agent log
+              const logEndpoint = 'http://127.0.0.1:7242/ingest/a4d1678e-921e-4a1e-9e4e-ae5c13838901';
+              const errorData = error instanceof Error ? {errorName:error.name,errorMessage:error.message,stack:error.stack} : {errorName:'Unknown',errorMessage:String(error)};
+              const isNetworkError = error instanceof TypeError && (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed'));
+              fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'components/NewPuppyForm.tsx:35',message:'form action error caught',data:{...errorData,errorType:typeof error,isNetworkError,origin:window.location.origin},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+              // #endregion
             }
           }}
           className="mt-4 flex w-full flex-col items-start gap-4"
