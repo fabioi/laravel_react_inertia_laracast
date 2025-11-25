@@ -19,16 +19,9 @@ export function LikeToggle({
       className={clsx('group', !auth.user && "cursor-not-allowed")}
       disabled={!auth.user}
       onClick={async () => {
-        // #region agent log
-        const logEndpoint = 'http://127.0.0.1:7242/ingest/a4d1678e-921e-4a1e-9e4e-ae5c13838901';
-        fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'components/LikeToggle.tsx:18',message:'onClick called',data:{puppyId:puppy.id,origin:window.location.origin},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-        // #endregion
         setPending(true);
         try {
           const updatedPuppy = await toggleLikedStatus(puppy.id);
-          // #region agent log
-          fetch('http://127.0.0.1:7242/ingest/a4d1678e-921e-4a1e-9e4e-ae5c13838901',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'components/LikeToggle.tsx:22',message:'toggleLikedStatus completed',data:{puppyId:updatedPuppy?.id},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-          // #endregion
           setPuppies((prevPups) => {
             return prevPups.map((existingPuppy) =>
               existingPuppy.id === updatedPuppy.id ? updatedPuppy : existingPuppy,
@@ -36,12 +29,6 @@ export function LikeToggle({
           });
           setPending(false);
         } catch (error) {
-          // #region agent log
-          const logEndpoint = 'http://127.0.0.1:7242/ingest/a4d1678e-921e-4a1e-9e4e-ae5c13838901';
-          const errorData = error instanceof Error ? {errorName:error.name,errorMessage:error.message,stack:error.stack} : {errorName:'Unknown',errorMessage:String(error)};
-          const isNetworkError = error instanceof TypeError && (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed'));
-          fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'components/LikeToggle.tsx:33',message:'onClick error caught',data:{...errorData,errorType:typeof error,isNetworkError,origin:window.location.origin},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-          // #endregion
           setPending(false);
         }
       }}
