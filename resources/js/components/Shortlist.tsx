@@ -1,15 +1,11 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { Puppy, SharedData } from "../types";
+import { useForm, usePage } from "@inertiajs/react";
 import { Heart, LoaderCircle, X } from "lucide-react";
-import { toggleLikedStatus } from "../queries";
-import { usePage } from "@inertiajs/react";
+import { Puppy, SharedData } from "../types";
 
 export function Shortlist({
   puppies,
-  setPuppies,
 }: {
   puppies: Puppy[];
-  setPuppies: Dispatch<SetStateAction<Puppy[]>>;
 }) {
   const { auth } = usePage<SharedData>().props;
   if (!auth.user) return null;
@@ -35,7 +31,7 @@ export function Shortlist({
                 src={puppy.imageUrl}
               />
               <p className="px-3 text-sm text-slate-800">{puppy.name}</p>
-              <DeleteButton id={puppy.id} setPuppies={setPuppies} />
+              <DeleteButton id={puppy.id} />
             </li>
           ))}
       </ul>
@@ -45,32 +41,30 @@ export function Shortlist({
 
 function DeleteButton({
   id,
-  setPuppies,
 }: {
   id: Puppy["id"];
-  setPuppies: Dispatch<SetStateAction<Puppy[]>>;
 }) {
-  const [pending, setPending] = useState(false);
+  
+  const {patch, processing} = useForm();
   return (
+    <form 
+    method="patch"
+    action={route('puppies.like', id)}
+    onSubmit={(e) => {
+      e.preventDefault();
+      patch(route('puppies.like', id),{preserveScroll: true});
+    }}> 
     <button
-      onClick={async () => {
-        setPending(true);
-        const updatedPuppy = await toggleLikedStatus(id);
-        setPuppies((prevPups) => {
-          return prevPups.map((existingPuppy) =>
-            existingPuppy.id === updatedPuppy.id ? updatedPuppy : existingPuppy,
-          );
-        });
-        setPending(false);
-      }}
+      type="submit"
       className="group h-full border-l border-slate-100 px-2 hover:bg-slate-100"
-      disabled={pending}
+      disabled={processing}
     >
-      {pending ? (
+      {processing ? (
         <LoaderCircle className="size-4 animate-spin stroke-slate-300" />
       ) : (
         <X className="size-4 stroke-slate-400 group-hover:stroke-red-400" />
       )}
     </button>
+    </form>
   );
 }
