@@ -1,4 +1,5 @@
 import { usePage } from "@inertiajs/react";
+import clsx from "clsx";
 import { Heart, LoaderCircle } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toggleLikedStatus } from "../queries";
@@ -15,7 +16,8 @@ export function LikeToggle({
   const [pending, setPending] = useState(false);
   return (
     <button
-      className="group"
+      className={clsx('group', !auth.user && "cursor-not-allowed")}
+      disabled={!auth.user}
       onClick={async () => {
         // #region agent log
         const logEndpoint = 'http://127.0.0.1:7242/ingest/a4d1678e-921e-4a1e-9e4e-ae5c13838901';
@@ -49,7 +51,7 @@ export function LikeToggle({
       ) : (
         <Heart
           className={
-            puppy.likedBy.includes(auth.user.id)
+            auth.user && puppy.likedBy.includes(auth.user.id)
               ? "fill-pink-500 stroke-none"
               : "stroke-slate-200 group-hover:stroke-slate-300"
           }
