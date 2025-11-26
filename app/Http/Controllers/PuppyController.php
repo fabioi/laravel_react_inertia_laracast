@@ -13,17 +13,20 @@ class PuppyController extends Controller
 {
     public function index(Request $request)
     {
-        $searchQuery = $request->input('search');
-        
+        $search = $request->input('search');
+
         return Inertia::render('puppies/index', [
             'puppies' => PuppyResource::collection(
                 Puppy::query()
-                    ->when($searchQuery, function ($query) use ($searchQuery) {
-                        $query->where('trait', 'like', "%$searchQuery%")
-                            ->orWhere('name', 'like', "%$searchQuery%");
+                    ->when($search, function ($query) use ($search) {
+                        $query->where('trait', 'like', "%$search%")
+                            ->orWhere('name', 'like', "%$search%");
                     })->with(['user', 'likedBy'])
                     ->get()
             ),
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
     }
 
