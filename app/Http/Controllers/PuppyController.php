@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,10 +11,19 @@ use App\Http\Resources\PuppyResource;
 
 class PuppyController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $searchQuery = $request->input('search');
+        
         return Inertia::render('puppies/index', [
-            'puppies' => PuppyResource::collection(Puppy::all()->load(['user', 'likedBy'])),
+            'puppies' => PuppyResource::collection(
+                Puppy::query()
+                    ->when($searchQuery, function ($query) use ($searchQuery) {
+                        $query->where('trait', 'like', "%$searchQuery%")
+                            ->orWhere('name', 'like', "%$searchQuery%");
+                    })->with(['user', 'likedBy'])
+                    ->get()
+            ),
         ]);
     }
 

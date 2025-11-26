@@ -13,7 +13,9 @@ export function Search() {
                 <input
                     ref={inputRef}
                     onChange={(e) => {
-                      router.visit(route('home'), { preserveScroll: true, data: { search: e.target.value } });
+                      router.get(route('home'), { 
+                        search: e.target.value
+                      }, {preserveState: true, preserveScroll: true});
                     }}
                     placeholder="playful..."
                     name="search"
