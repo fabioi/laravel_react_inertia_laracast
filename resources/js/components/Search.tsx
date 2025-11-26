@@ -1,5 +1,6 @@
 import { Filters } from '@/types';
 import { router } from '@inertiajs/react';
+import { debounce } from 'lodash-es';
 import { Delete } from 'lucide-react';
 import { useRef } from 'react';
 
@@ -16,12 +17,12 @@ export function Search({ filters }: { filters: Filters }) {
                        This prevents re-renders on every keystroke while still initializing with the filter value. */
                     defaultValue={filters.search ?? ''}
                     ref={inputRef}
-                    onChange={(e) => {
+                    onChange={debounce((e) => {
                       router.get(route('home'), { 
                         search: e.target.value
                       }, {
                         preserveState: true, preserveScroll: true});
-                    }}
+                    }, 500)}
                     placeholder="playful..."
                     name="search"
                     id="search"
