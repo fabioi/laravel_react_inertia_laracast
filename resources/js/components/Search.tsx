@@ -1,8 +1,9 @@
+import { Filters } from '@/types';
 import { router } from '@inertiajs/react';
 import { Delete } from 'lucide-react';
 import { useRef } from 'react';
 
-export function Search() {
+export function Search({ filters }: { filters: Filters }) {
     const inputRef = useRef<HTMLInputElement>(null);
     return (
         <div>
@@ -11,6 +12,7 @@ export function Search() {
             </label>
             <div className="mt-2 flex items-center gap-4">
                 <input
+                    defaultValue={filters.search ?? ''}
                     ref={inputRef}
                     onChange={(e) => {
                       router.get(route('home'), { 
