@@ -12,6 +12,8 @@ export function Search({ filters }: { filters: Filters }) {
             </label>
             <div className="mt-2 flex items-center gap-4">
                 <input
+                    /* Using defaultValue instead of value to allow the input to be uncontrolled.
+                       This prevents re-renders on every keystroke while still initializing with the filter value. */
                     defaultValue={filters.search ?? ''}
                     ref={inputRef}
                     onChange={(e) => {
