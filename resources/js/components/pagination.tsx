@@ -12,7 +12,6 @@ type PaginationProps = {
 
 
 export function Pagination({ meta, links, className }: PaginationProps) {
-
             return (
             <div className={cn("flex items-center justify-between", className)}>
               <div> 
