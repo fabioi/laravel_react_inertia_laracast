@@ -22,7 +22,7 @@ class PuppyController extends Controller
                         $query->where('trait', 'like', "%$search%")
                             ->orWhere('name', 'like', "%$search%");
                     })->with(['user', 'likedBy'])
-                    ->get()
+                    ->paginate(10)
             ),
             'filters' => [
                 'search' => $search,
