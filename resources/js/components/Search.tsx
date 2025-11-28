@@ -4,7 +4,7 @@ import { debounce } from 'lodash-es';
 import { Delete } from 'lucide-react';
 import { useRef } from 'react';
 
-export function Search({ filters }: { filters: Filters }) {
+export function Search() {
     const inputRef = useRef<HTMLInputElement>(null);
     return (
         <div>
@@ -15,7 +15,7 @@ export function Search({ filters }: { filters: Filters }) {
                 <input
                     /* Using defaultValue instead of value to allow the input to be uncontrolled.
                        This prevents re-renders on every keystroke while still initializing with the filter value. */
-                    defaultValue={filters.search ?? ''}
+                    defaultValue={''}
                     ref={inputRef}
                     onChange={debounce((e) => {
                       router.get(route('home'), { 
