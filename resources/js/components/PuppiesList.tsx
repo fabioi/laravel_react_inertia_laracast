@@ -14,7 +14,7 @@ export function PuppiesList({
           <PuppyCard key={puppy.id} puppy={puppy} />
         ))}
     </ul>
-    <Pagination pagination={{ meta: puppies.meta, links: puppies.links }} />
+    <Pagination className="mt-8" meta={puppies.meta} links={puppies.links} />
     </>
     );
 }
