@@ -2,6 +2,8 @@ import { useForm, usePage } from "@inertiajs/react";
 import { Heart, LoaderCircle, X } from "lucide-react";
 import { Puppy, SharedData } from "../types";
 
+
+// todo make sure all the like puppies are showing and not only the ones that are in the current page
 export function Shortlist({
   puppies,
 }: {

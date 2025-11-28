@@ -7,7 +7,6 @@ import { Search } from '@/components/Search';
 import { Shortlist } from '@/components/Shortlist';
 import { Filters, PaginatedResponse, Puppy, SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
-import { useState } from 'react';
 
 export default function App({ puppies, filters }: { puppies: PaginatedResponse<Puppy>, filters: Filters }) {
     return (
@@ -22,7 +21,6 @@ export default function App({ puppies, filters }: { puppies: PaginatedResponse<P
 }
 
 function Main({ paginatePuppies }: { paginatePuppies: PaginatedResponse<Puppy> }) {
-    const [puppies, setPuppies] = useState<Puppy[]>(paginatePuppies.data);
     const { auth } = usePage<SharedData>().props;
 
     return (
@@ -32,7 +30,7 @@ function Main({ paginatePuppies }: { paginatePuppies: PaginatedResponse<Puppy> }
                 {auth.user && <Shortlist puppies={paginatePuppies.data} />}
             </div>
             <PuppiesList puppies={paginatePuppies} />
-            <NewPuppyForm puppies={paginatePuppies.data} setPuppies={setPuppies} />
+            {auth.user && <NewPuppyForm />}
         </main>
     );
 }

@@ -12,6 +12,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::patch('puppies/{puppy}/like', [PuppyController::class, 'like'])->name('puppies.like');
+
+    Route::post('puppies', [PuppyController::class, 'store'])->name('puppies.store');
 });
 
 require __DIR__ . '/settings.php';

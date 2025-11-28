@@ -1,45 +1,24 @@
-import { Dispatch, SetStateAction } from "react";
-import { Puppy } from "../types";
+import { useForm } from "@inertiajs/react";
 import { useFormStatus } from "react-dom";
-import { createPuppy } from "../queries";
-import { ErrorBoundary } from "react-error-boundary";
 
-export function NewPuppyForm({
-  puppies,
-  setPuppies,
-}: {
-  puppies: Puppy[];
-  setPuppies: Dispatch<SetStateAction<Puppy[]>>;
+export function NewPuppyForm({}: {
 }) {
+
+  const {post, processing, data, setData} = useForm({
+    name: '',
+    trait: '',
+    image: '',
+  });
+
+
   return (
     <div className="mt-12 flex items-center justify-between bg-white p-8 shadow ring ring-black/5">
-      <ErrorBoundary
-        fallbackRender={({ error }) => (
-          <pre>{JSON.stringify(error, null, 2)}</pre>
-        )}
-      >
         <form
-          action={async (formData: FormData) => {
-            // #region agent log
-            const logEndpoint = 'http://127.0.0.1:7242/ingest/a4d1678e-921e-4a1e-9e4e-ae5c13838901';
-            fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'components/NewPuppyForm.tsx:23',message:'form action called',data:{name:formData.get('name'),origin:window.location.origin},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-            // #endregion
-            try {
-              const response = await createPuppy(formData);
-              // #region agent log
-              fetch('http://127.0.0.1:7242/ingest/a4d1678e-921e-4a1e-9e4e-ae5c13838901',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'components/NewPuppyForm.tsx:26',message:'createPuppy completed',data:{hasData:!!response.data},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-              // #endregion
-              if (response.data) {
-                setPuppies([...puppies, response.data]);
-              }
-            } catch (error) {
-              // #region agent log
-              const logEndpoint = 'http://127.0.0.1:7242/ingest/a4d1678e-921e-4a1e-9e4e-ae5c13838901';
-              const errorData = error instanceof Error ? {errorName:error.name,errorMessage:error.message,stack:error.stack} : {errorName:'Unknown',errorMessage:String(error)};
-              const isNetworkError = error instanceof TypeError && (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed'));
-              fetch(logEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'components/NewPuppyForm.tsx:35',message:'form action error caught',data:{...errorData,errorType:typeof error,isNetworkError,origin:window.location.origin},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-              // #endregion
-            }
+          onSubmit={(e) => {
+            e.preventDefault();
+            post(route('puppies.store'), {
+              preserveScroll: true,
+            });
           }}
           className="mt-4 flex w-full flex-col items-start gap-4"
         >
@@ -47,6 +26,7 @@ export function NewPuppyForm({
             <fieldset className="flex w-full flex-col gap-1">
               <label htmlFor="name">Name</label>
               <input
+                value={data.name}
                 required
                 className="max-w-96 rounded-sm bg-white px-2 py-1 ring ring-black/20 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 id="name"
@@ -57,6 +37,7 @@ export function NewPuppyForm({
             <fieldset className="flex w-full flex-col gap-1">
               <label htmlFor="trait">Personality trait</label>
               <input
+                value={data.trait}
                 required
                 className="max-w-96 rounded-sm bg-white px-2 py-1 ring ring-black/20 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 id="trait"
@@ -65,18 +46,19 @@ export function NewPuppyForm({
               />
             </fieldset>
             <fieldset className="col-span-2 flex w-full flex-col gap-1">
-              <label htmlFor="image_url">Profile pic</label>
+              <label htmlFor="image">Profile pic</label>
               <input
+                value={data.image}
+                required
                 className="max-w-96 rounded-sm bg-white px-2 py-1 ring ring-black/20 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
-                id="image_url"
+                id="image"
                 type="file"
-                name="image_url"
+                name="image"
               />
             </fieldset>
           </div>
           <SubmitButton />
         </form>
-      </ErrorBoundary>
     </div>
   );
 }
