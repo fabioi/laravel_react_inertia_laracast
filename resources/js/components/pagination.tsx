@@ -16,7 +16,7 @@ export function Pagination({ meta, links, className }: PaginationProps) {
             <div className={cn("flex items-center justify-between", className)}>
               <div> 
                 {links.prev && (
-                  <Button asChild>
+                  <Button variant="ghost" asChild>
                     <Link href={links.prev} className="mr-2"> Previous </Link>
                 </Button>
               )}
@@ -24,7 +24,7 @@ export function Pagination({ meta, links, className }: PaginationProps) {
 
               <div> 
                 {links.next && (
-                  <Button asChild>
+                  <Button variant="ghost" asChild>
                     <Link href={links.next} className="mr-2"> Next </Link>
                 </Button>
               )}
