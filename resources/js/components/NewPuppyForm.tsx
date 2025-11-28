@@ -4,10 +4,14 @@ import { useFormStatus } from "react-dom";
 export function NewPuppyForm({}: {
 }) {
 
-  const {post, processing, data, setData} = useForm({
+  const {post, processing, data, setData} = useForm<{
+    name: string;
+    trait: string;
+    image: File | null;
+  }>({
     name: '',
     trait: '',
-    image: '',
+    image: null as File | null,
   });
 
 
@@ -28,6 +32,7 @@ export function NewPuppyForm({}: {
               <input
                 value={data.name}
                 required
+                onChange={(e) => setData('name', e.target.value)}
                 className="max-w-96 rounded-sm bg-white px-2 py-1 ring ring-black/20 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 id="name"
                 type="text"
@@ -39,6 +44,7 @@ export function NewPuppyForm({}: {
               <input
                 value={data.trait}
                 required
+                onChange={(e) => setData('trait', e.target.value)}
                 className="max-w-96 rounded-sm bg-white px-2 py-1 ring ring-black/20 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 id="trait"
                 type="text"
@@ -48,8 +54,9 @@ export function NewPuppyForm({}: {
             <fieldset className="col-span-2 flex w-full flex-col gap-1">
               <label htmlFor="image">Profile pic</label>
               <input
-                value={data.image}
+                value={data.image?.name ?? ''}
                 required
+                onChange={(e) => setData('image', e.target.files?.[0] ?? (undefined as unknown as File | null))}
                 className="max-w-96 rounded-sm bg-white px-2 py-1 ring ring-black/20 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 id="image"
                 type="file"

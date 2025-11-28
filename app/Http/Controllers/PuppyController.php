@@ -46,19 +46,6 @@ class PuppyController extends Controller
     /** STORE */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'trait' => 'required|string|max:255',
-            'image' => 'required|image|max:2048',
-        ]);
-
-        Puppy::create([
-            'user_id' => $request->user()->id,
-            'name' => $request->name,
-            'trait' => $request->trait,
-            'image_url' => $request->image->store('puppies', 'public'),
-        ]);
-
-        return redirect()->route('puppies.index');
+       dd($request->all());
     }
 }
