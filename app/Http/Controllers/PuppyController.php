@@ -46,6 +46,8 @@ class PuppyController extends Controller
     /** STORE */
     public function store(Request $request)
     {
-       dd($request->all());
+        dd($request->all());
+        // Dopo il dd() non arriverai mai qui, ma se vuoi continuare:
+        return redirect()->back();
     }
 }
