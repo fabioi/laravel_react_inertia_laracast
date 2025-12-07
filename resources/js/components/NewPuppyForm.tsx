@@ -1,12 +1,11 @@
 import { useForm } from "@inertiajs/react";
 import { useRef } from "react";
-import { useFormStatus } from "react-dom";
 
 export function NewPuppyForm({mainRef}: {
   mainRef: React.RefObject<HTMLElement | null>;
 }) {
 
-  const {post, processing, data, setData, errors, reset} = useForm<{
+  const {post, data, setData, errors, reset, processing} = useForm<{
     name: string;
     trait: string;
     image: File | null;
@@ -79,7 +78,13 @@ export function NewPuppyForm({mainRef}: {
               {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image}</p>}
             </fieldset>
           </div>
-          <SubmitButton />
+          <button
+      className="mt-4 inline-block rounded bg-cyan-300 px-4 py-2 font-medium text-cyan-900 hover:bg-cyan-200 focus:ring-2 focus:ring-cyan-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-slate-200"
+      type="submit"
+      disabled={processing}
+    >
+      {processing ? `Adding ${data.name}`: "Add puppy"}
+    </button>
         </form>
         {/* <pre> 
           {JSON.stringify(errors,null,2)}
@@ -89,17 +94,4 @@ export function NewPuppyForm({mainRef}: {
   );
 }
 
-function SubmitButton() {
-  const status = useFormStatus();
-  return (
-    <button
-      className="mt-4 inline-block rounded bg-cyan-300 px-4 py-2 font-medium text-cyan-900 hover:bg-cyan-200 focus:ring-2 focus:ring-cyan-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-slate-200"
-      type="submit"
-      disabled={status.pending}
-    >
-      {status.pending
-        ? `Adding ${status?.data?.get("name") || "puppy"}...`
-        : "Add puppy"}
-    </button>
-  );
-}
+
