@@ -129,26 +129,26 @@ class PuppySeeder extends Seeder
 
         $simon = User::first();
 
-        $optimizeWebpImageAction = new OptimizeWebpImageAction;
+        $optimizer = new OptimizeWebpImageAction();
 
+        
         foreach ($puppies as $puppy) {
 
-            // optimize image
-            $imagePath = storage_path('app/public/puppies/' . $puppy['image']);
-            $optimizedImage = $optimizeWebpImageAction->handle($imagePath);
+            // Optimize the image
+            $input = storage_path('app/public/puppies/' . $puppy['image']);
+            $optimized = $optimizer->handle($input);
 
-            // store image
-            $path = 'puppies/' . $optimizedImage['filename'];
-            Storage::disk('public')->put($path, $optimizedImage['webpString']);
+            // Grab the path of the image
+            $path = 'puppies/' . $optimized['fileName'];
 
-            // grab the path of the image
-            $image_url = Storage::url($path);
+            // Store that image
+            Storage::disk('public')->put($path, $optimized['webpString']);
 
             Puppy::create([
                 'user_id' => $simon->id,
                 'name' => $puppy['name'],
                 'trait' => $puppy['trait'],
-                'image_url' => $image_url,
+                'image_url' => Storage::url($path),
             ]);
         }
     }

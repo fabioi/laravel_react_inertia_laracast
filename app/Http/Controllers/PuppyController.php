@@ -45,7 +45,7 @@ class PuppyController extends Controller
     }
 
     /** STORE */
-    public function store(Request $request, OptimizeWebpImageAction $optimizeWebpImageAction)
+    public function store(Request $request)
     {
         sleep(2);
 
@@ -60,20 +60,18 @@ class PuppyController extends Controller
         // store the upload image
         if ($request->hasFile('image')) {
 
-            $optimizedImage = $optimizeWebpImageAction->handle($request->file('image'));
+            $optimizedImage = (new OptimizeWebpImageAction())->handle($request->file('image'));
 
-            $path = 'puppies/'.$optimizedImage['filename'];
+            $path = 'puppies/' . $optimizedImage['filename'];
 
             Storage::disk('public')->put($path, $optimizedImage['webpString']);
-
-            $image_url = Storage::url($path);
         }
 
         Puppy::create([
             'user_id' => $request->user()->id,
             'name' => $request->name,
             'trait' => $request->trait,
-            'image_url' => $image_url,
+            'image_url' => Storage::url($path),
         ]);
 
         return redirect()->back()->with('success', 'Puppy created successfully');
