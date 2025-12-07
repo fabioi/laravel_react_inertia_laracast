@@ -4,7 +4,7 @@ import { useFormStatus } from "react-dom";
 export function NewPuppyForm({}: {
 }) {
 
-  const {post, processing, data, setData} = useForm<{
+  const {post, processing, data, setData, errors} = useForm<{
     name: string;
     trait: string;
     image: File | null;
@@ -16,6 +16,7 @@ export function NewPuppyForm({}: {
 
 
   return (
+    <>
     <div className="mt-12 flex items-center justify-between bg-white p-8 shadow ring ring-black/5">
         <form
           onSubmit={(e) => {
@@ -31,7 +32,7 @@ export function NewPuppyForm({}: {
               <label htmlFor="name">Name</label>
               <input
                 value={data.name}
-                required
+                
                 onChange={(e) => setData('name', e.target.value)}
                 className="max-w-96 rounded-sm bg-white px-2 py-1 ring ring-black/20 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 id="name"
@@ -43,7 +44,7 @@ export function NewPuppyForm({}: {
               <label htmlFor="trait">Personality trait</label>
               <input
                 value={data.trait}
-                required
+                
                 onChange={(e) => setData('trait', e.target.value)}
                 className="max-w-96 rounded-sm bg-white px-2 py-1 ring ring-black/20 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 id="trait"
@@ -54,7 +55,7 @@ export function NewPuppyForm({}: {
             <fieldset className="col-span-2 flex w-full flex-col gap-1">
               <label htmlFor="image">Profile pic</label>
               <input
-                required
+                
                 onChange={(e) => setData('image', e.target.files?.[0] ?? null)}
                 className="max-w-96 rounded-sm bg-white px-2 py-1 ring ring-black/20 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 id="image"
@@ -65,7 +66,11 @@ export function NewPuppyForm({}: {
           </div>
           <SubmitButton />
         </form>
+        <pre> 
+          {JSON.stringify(errors,null,2)}
+        </pre>
     </div>
+    </>
   );
 }
 

@@ -46,8 +46,16 @@ class PuppyController extends Controller
     /** STORE */
     public function store(Request $request)
     {
-        dd($request->all());
-        // Dopo il dd() non arriverai mai qui, ma se vuoi continuare:
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'trait' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg, png,jpg,gif, svg|max:5120',
+        ]);
+
+        dd('valid!');
+
+
         return redirect()->back();
     }
 }
