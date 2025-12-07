@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -60,20 +60,25 @@ class PuppyController extends Controller
         // store the upload image
         if ($request->hasFile('image')) {
 
-            $optimizedImage = (new OptimizeWebpImageAction())->handle($request->file('image'));
+            $optimized = (new OptimizeWebpImageAction)->handle($request->file('image'));
 
-            $path = 'puppies/' . $optimizedImage['filename'];
+            $path = 'puppies/'.$optimized['fileName'];
 
-            Storage::disk('public')->put($path, $optimizedImage['webpString']);
+            $stored = Storage::disk('public')->put($path, $optimized['webpString']);
+
+            if (! $stored) {
+                return back()->withErrors(['image' => 'Failed to upload image.']);
+            }
+            $image_url = Storage::url($path);
         }
 
-        Puppy::create([
-            'user_id' => $request->user()->id,
+        // Create a new Puppy instance attached to the authenticated user
+        $request->user()->puppies()->create([
             'name' => $request->name,
             'trait' => $request->trait,
-            'image_url' => Storage::url($path),
+            'image_url' => $image_url,
         ]);
 
-        return redirect()->back()->with('success', 'Puppy created successfully');
+        return back()->with('success', 'Puppy created successfully!');
     }
 }
