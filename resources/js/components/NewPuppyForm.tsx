@@ -1,10 +1,12 @@
 import { useForm } from "@inertiajs/react";
+import { useRef } from "react";
 import { useFormStatus } from "react-dom";
 
-export function NewPuppyForm({}: {
+export function NewPuppyForm({mainRef}: {
+  mainRef: React.RefObject<HTMLElement | null>;
 }) {
 
-  const {post, processing, data, setData, errors} = useForm<{
+  const {post, processing, data, setData, errors, reset} = useForm<{
     name: string;
     trait: string;
     image: File | null;
@@ -14,6 +16,7 @@ export function NewPuppyForm({}: {
     image: null as File | null,
   });
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -23,6 +26,15 @@ export function NewPuppyForm({}: {
             e.preventDefault();
             post(route('puppies.store'), {
               preserveScroll: true,
+              onSuccess: () => {
+                reset();
+                if (fileInputRef.current) {
+                  fileInputRef.current.value = '';
+                }
+                if(typeof window !== 'undefined') {
+                 mainRef.current?.scrollIntoView({behavior: 'smooth', block: 'start'});
+                }
+              },
             });
           }}
           className="mt-4 flex w-full flex-col items-start gap-4"
@@ -39,6 +51,7 @@ export function NewPuppyForm({}: {
                 type="text"
                 name="name"
               />
+              {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
             </fieldset>
             <fieldset className="flex w-full flex-col gap-1">
               <label htmlFor="trait">Personality trait</label>
@@ -51,24 +64,26 @@ export function NewPuppyForm({}: {
                 type="text"
                 name="trait"
               />
+              {errors.trait && <p className="text-red-500 text-xs mt-1">{errors.trait}</p>}
             </fieldset>
             <fieldset className="col-span-2 flex w-full flex-col gap-1">
               <label htmlFor="image">Profile pic</label>
               <input
-                
+                ref={fileInputRef}
                 onChange={(e) => setData('image', e.target.files?.[0] ?? null)}
                 className="max-w-96 rounded-sm bg-white px-2 py-1 ring ring-black/20 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 id="image"
                 type="file"
                 name="image"
               />
+              {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image}</p>}
             </fieldset>
           </div>
           <SubmitButton />
         </form>
-        <pre> 
+        {/* <pre> 
           {JSON.stringify(errors,null,2)}
-        </pre>
+        </pre> */}
     </div>
     </>
   );

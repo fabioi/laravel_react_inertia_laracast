@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Puppy;
-use Inertia\Inertia;
 use App\Http\Resources\PuppyResource;
+use App\Models\Puppy;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class PuppyController extends Controller
 {
-
     /** INDEX */
     public function index(Request $request)
     {
@@ -24,6 +24,7 @@ class PuppyController extends Controller
                         $query->where('trait', 'like', "%$search%")
                             ->orWhere('name', 'like', "%$search%");
                     })->with(['user', 'likedBy'])
+                    ->latest()
                     ->paginate(6)
                     ->withQueryString()
             ),
@@ -42,7 +43,6 @@ class PuppyController extends Controller
         return back();
     }
 
-
     /** STORE */
     public function store(Request $request)
     {
@@ -50,12 +50,30 @@ class PuppyController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'trait' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg, png,jpg,gif, svg|max:5120',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif, svg|max:5120',
         ]);
 
-        dd('valid!');
+
+        $image_url = null;
+        // store the upload image
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('puppies', 'public');
+
+            if (!$path) {
+                return redirect()->back()->withErrors(['image' => 'Failed to upload image']);
+            }
+
+            $image_url = Storage::url($path);
+        }
+
+        $puppy = Puppy::create([
+            'user_id' => $request->user()->id,
+            'name' => $request->name,
+            'trait' => $request->trait,
+            'image_url' => $image_url,
+        ]);
 
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Puppy created successfully');
     }
 }
