@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\OptimizeWebpImageAction;
 use App\Http\Resources\PuppyResource;
 use App\Models\Puppy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
-use Intervention\Image\Laravel\Facades\Image;
 
 class PuppyController extends Controller
 {
@@ -46,7 +45,7 @@ class PuppyController extends Controller
     }
 
     /** STORE */
-    public function store(Request $request)
+    public function store(Request $request, OptimizeWebpImageAction $optimizeWebpImageAction)
     {
         sleep(2);
 
@@ -56,29 +55,16 @@ class PuppyController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif, svg|max:5120',
         ]);
 
-
         $image_url = null;
 
         // store the upload image
         if ($request->hasFile('image')) {
 
-            // image optimization
-            $image = Image::read($request->file('image'));
+            $optimizedImage = $optimizeWebpImageAction->handle($request->file('image'));
 
+            $path = 'puppies/'.$optimizedImage['filename'];
 
-            // scale down only
-            if ($image->width() > 1000 || $image->height() > 1000) {
-                $image->scale(1000);
-            }
-
-
-            $webpEncoded = $image->toWebp(95)->toString();
-
-            $filename = Str::random(10) . '.webp';
-
-            $path = 'puppies/' . $filename;
-
-            Storage::disk('public')->put($path, $webpEncoded);
+            Storage::disk('public')->put($path, $optimizedImage['webpString']);
 
             $image_url = Storage::url($path);
         }
@@ -89,7 +75,6 @@ class PuppyController extends Controller
             'trait' => $request->trait,
             'image_url' => $image_url,
         ]);
-
 
         return redirect()->back()->with('success', 'Puppy created successfully');
     }
