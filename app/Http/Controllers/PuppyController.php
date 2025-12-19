@@ -18,8 +18,6 @@ class PuppyController extends Controller
     {
         $search = $request->input('search');
 
-        $request->session()->flash('success','You have arrived!');
-
         return Inertia::render('puppies/index', [
             'puppies' => PuppyResource::collection(
                 Puppy::query()
@@ -65,7 +63,7 @@ class PuppyController extends Controller
 
             $optimized = (new OptimizeWebpImageAction)->handle($request->file('image'));
 
-            $path = 'puppies/'.$optimized['fileName'];
+            $path = 'puppies/' . $optimized['fileName'];
 
             $stored = Storage::disk('public')->put($path, $optimized['webpString']);
 
