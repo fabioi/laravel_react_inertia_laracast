@@ -30,6 +30,7 @@ class PuppyController extends Controller
                     ->withQueryString()
             ),
             'filters' => [
+                'likedPuppies' => $request->user() ? PuppyResource::collection($request->user()->likedPuppies) : [],
                 'search' => $search,
             ],
         ]);
