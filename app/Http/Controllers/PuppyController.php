@@ -63,7 +63,7 @@ class PuppyController extends Controller
 
             $optimized = (new OptimizeWebpImageAction)->handle($request->file('image'));
 
-            $path = 'puppies/' . $optimized['fileName'];
+            $path = 'puppies/'.$optimized['fileName'];
 
             $stored = Storage::disk('public')->put($path, $optimized['webpString']);
 
@@ -80,6 +80,8 @@ class PuppyController extends Controller
             'image_url' => $image_url,
         ]);
 
-        return back()->with('success', 'Puppy created successfully!');
+        return redirect()
+            ->route('home', ['page' => 1])
+            ->with('success', 'Puppy created successfully!');
     }
 }
