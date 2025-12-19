@@ -1,6 +1,6 @@
 import { useForm, usePage } from "@inertiajs/react";
 import { Heart, LoaderCircle, X } from "lucide-react";
-import { Puppy, SharedData } from "../types";
+import { Puppy, SharedData } from '@/types';
 
 
 // todo make sure all the like puppies are showing and not only the ones that are in the current page
@@ -19,7 +19,6 @@ export function Shortlist({
       </h2>
       <ul className="mt-4 flex flex-wrap gap-4">
         {puppies
-          .filter((pup) => pup.likedBy.includes(auth.user.id))
           .map((puppy) => (
             <li
               key={puppy.id}
@@ -46,17 +45,17 @@ function DeleteButton({
 }: {
   id: Puppy["id"];
 }) {
-  
+
   const {patch, processing} = useForm();
   return (
-    <form 
+    <form
     className="h-full"
     method="patch"
     action={route('puppies.like', id)}
     onSubmit={(e) => {
       e.preventDefault();
       patch(route('puppies.like', id),{preserveScroll: true});
-    }}> 
+    }}>
     <button
       type="submit"
       className="group h-full border-l border-slate-100 px-2 hover:bg-slate-100"

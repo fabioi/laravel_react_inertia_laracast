@@ -1,6 +1,6 @@
 <?php
 
- declare(strict_types=1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -29,8 +29,8 @@ class PuppyController extends Controller
                     ->paginate(6)
                     ->withQueryString()
             ),
+            'likedPuppies' => $request->user() ? PuppyResource::collection($request->user()->likedPuppies) : [],
             'filters' => [
-                'likedPuppies' => $request->user() ? PuppyResource::collection($request->user()->likedPuppies) : [],
                 'search' => $search,
             ],
         ]);
@@ -63,7 +63,7 @@ class PuppyController extends Controller
 
             $optimized = (new OptimizeWebpImageAction)->handle($request->file('image'));
 
-            $path = 'puppies/'.$optimized['fileName'];
+            $path = 'puppies/' . $optimized['fileName'];
 
             $stored = Storage::disk('public')->put($path, $optimized['webpString']);
 
