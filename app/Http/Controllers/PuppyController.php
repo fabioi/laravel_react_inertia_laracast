@@ -18,6 +18,8 @@ class PuppyController extends Controller
     {
         $search = $request->input('search');
 
+        $request->session()->flash('success','You have arrived!');
+
         return Inertia::render('puppies/index', [
             'puppies' => PuppyResource::collection(
                 Puppy::query()
