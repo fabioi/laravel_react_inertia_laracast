@@ -4,7 +4,7 @@ import { debounce } from 'lodash-es';
 import { Delete } from 'lucide-react';
 import { useRef } from 'react';
 
-export function Search() {
+export function Search({ filters }: { filters: Filters }) {
     const inputRef = useRef<HTMLInputElement>(null);
     return (
         <div>
@@ -13,16 +13,18 @@ export function Search() {
             </label>
             <div className="mt-2 flex items-center gap-4">
                 <input
-                    /* Using defaultValue instead of value to allow the input to be uncontrolled.
-                       This prevents re-renders on every keystroke while still initializing with the filter value. */
-                    defaultValue={''}
+                    defaultValue={filters.search}
                     ref={inputRef}
                     onChange={debounce((e) => {
-                      router.get(route('home'), { 
-                        search: e.target.value
-                      }, {
-                        preserveState: true, preserveScroll: true});
-                    }, 500)}
+                        router.get(
+                            route('home'),
+                            { search: e.target.value },
+                            {
+                                preserveState: true,
+                                preserveScroll: true,
+                            },
+                        );
+                    }, 300)}
                     placeholder="playful..."
                     name="search"
                     id="search"
@@ -30,17 +32,19 @@ export function Search() {
                     className="w-full max-w-80 bg-white px-4 py-2 ring ring-black/5 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 />
                 <button
-                    onClick={(e) => {
-                      router.get(route('home'), { 
-                        search: '',
-                      }, {
-                        preserveState: true, 
-                        preserveScroll: true,
-                        onSuccess: () => {
-                          inputRef.current!.value = '';
-                            inputRef.current!.focus();
-                          },
-                        });
+                    onClick={() => {
+                        router.get(
+                            route('home'),
+                            {},
+                            {
+                                preserveState: true,
+                                preserveScroll: true,
+                                onSuccess: () => {
+                                    inputRef.current!.value = '';
+                                    inputRef.current?.focus();
+                                },
+                            },
+                        );
                     }}
                     className="inline-block rounded bg-cyan-300 px-4 py-2 !pr-3 !pl-2.5 font-medium text-cyan-900 hover:bg-cyan-200 focus:ring-2 focus:ring-cyan-500 focus:outline-none"
                 >
