@@ -39,7 +39,7 @@ class PuppyController extends Controller
     /** LIKE */
     public function like(Request $request, Puppy $puppy)
     {
-        sleep(1);
+        usleep(200000);
         $puppy->likedBy()->toggle($request->user()->id);
 
         return back();
@@ -48,7 +48,7 @@ class PuppyController extends Controller
     /** STORE */
     public function store(Request $request)
     {
-        sleep(2);
+        usleep(200000);
 
         $request->validate([
             'name' => 'required|string|max:255',
