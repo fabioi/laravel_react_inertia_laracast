@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "laravel-boost": {
+      "command": "/Users/fabioingrasciotta/Library/Application Support/Herd/bin/php82",
+      "args": [
+        "/Users/fabioingrasciotta/Herd/study/react-inertia-tutorial/artisan",
+        "boost:mcp"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-playwright"
+      ],
+      "env": {
+        "PLAYWRIGHT_BASE_URL": "http://127.0.0.1:8001"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/fabioingrasciotta/Herd/study/react-inertia-tutorial/resources/js"
+      ]
+    }
+  }
+}
