@@ -42,7 +42,7 @@ export function PuppyDelete({ puppy }: { puppy: Puppy }) {
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <form onSubmit={handleSubmit} method="POST">
-                            <Button type="submit" disabled={processing}>
+                            <Button aria-disabled={processing}  type="submit" disabled={processing}>
                                 {processing ? 'Deleting...' : `Delete ${puppy.name}`}
                             </Button>
                         </form>
