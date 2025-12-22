@@ -13,9 +13,11 @@ import { Button } from '@/components/ui/button';
 import { Puppy } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { TrashIcon } from 'lucide-react';
+import { useState } from 'react';
 
 export function PuppyDelete({ puppy }: { puppy: Puppy }) {
     const { processing, delete: destroy } = useForm();
+    const [open, setOpen] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,7 +28,7 @@ export function PuppyDelete({ puppy }: { puppy: Puppy }) {
 
     return (
         <>
-            <AlertDialog>
+            <AlertDialog open={open} onOpenChange={setOpen}>
                 <AlertDialogTrigger asChild>
                     <Button className="group/delete bg-background/30 hover:bg-background" size="icon" variant="secondary" aria-label={`Delete ${puppy.name}`}>
                         <TrashIcon className="size-4 group-hover/delete:text-destructive" />
@@ -40,9 +42,9 @@ export function PuppyDelete({ puppy }: { puppy: Puppy }) {
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <form onSubmit={handleSubmit} method="POST">
-                            <AlertDialogAction type="submit" disabled={processing}>
+                            <Button type="submit" disabled={processing}>
                                 {processing ? 'Deleting...' : `Delete ${puppy.name}`}
-                            </AlertDialogAction>
+                            </Button>
                         </form>
                     </AlertDialogFooter>
                 </AlertDialogContent>

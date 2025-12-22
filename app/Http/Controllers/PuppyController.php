@@ -88,7 +88,7 @@ class PuppyController extends Controller
     /** DELETE */
     public function destroy(Request $request, Puppy $puppy)
     {
-        usleep(200000);
+        usleep(2000000);
 
         $image_path = str_replace('storage/', '', $puppy->image_url); // eg: puppies/abc.jpg
 
