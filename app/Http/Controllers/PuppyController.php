@@ -63,7 +63,7 @@ class PuppyController extends Controller
 
             $optimized = (new OptimizeWebpImageAction)->handle($request->file('image'));
 
-            $path = 'puppies/' . $optimized['fileName'];
+            $path = 'puppies/'.$optimized['fileName'];
 
             $stored = Storage::disk('public')->put($path, $optimized['webpString']);
 
@@ -90,7 +90,11 @@ class PuppyController extends Controller
     {
         usleep(200000);
 
-        $image_path =str_replace('storage/', '', $puppy->image_url); // eg: puppies/abc.jpg
+        $image_path = str_replace('storage/', '', $puppy->image_url); // eg: puppies/abc.jpg
+
+        if ($request->user()->cannot('delete', $puppy)) {
+            return back()->withErrors(['error' => 'You are not authorized to delete this puppy.']);
+        }
 
         $puppy->delete();
 
