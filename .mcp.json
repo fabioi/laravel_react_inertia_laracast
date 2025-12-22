@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "laravel": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@tobi-wan-kenobi/laravel-mcp"],
+      "env": {}
+    },
+    "laravel-boost": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@laravel-boost/mcp"],
+      "env": {}
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "env": {}
+    }
+  }
+}
