@@ -25,6 +25,9 @@ class PuppyResource extends JsonResource
                 return $query->pluck('id');
             }),
             'user' => UserResource::make($this->whenLoaded('user')),
+            'can' => [
+                'delete' => $request->user()?->can('delete', $this) ?? false,
+            ],
         ];
     }
 }
