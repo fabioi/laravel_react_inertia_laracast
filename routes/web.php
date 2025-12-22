@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\PuppyController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\PuppyController;
 
 Route::get('/', [PuppyController::class, 'index'])->name('home');
 
@@ -18,5 +18,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('puppies/{puppy}', [PuppyController::class, 'destroy'])->name('puppies.destroy');
 });
 
-require __DIR__ . '/settings.php';
-require __DIR__ . '/auth.php';
+require __DIR__.'/settings.php';
+require __DIR__.'/auth.php';
