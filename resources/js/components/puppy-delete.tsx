@@ -11,9 +11,19 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Puppy } from '@/types';
+import { useForm } from '@inertiajs/react';
 import { TrashIcon } from 'lucide-react';
 
 export function PuppyDelete({ puppy }: { puppy: Puppy }) {
+    const { processing, delete: destroy } = useForm();
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        destroy(route('puppies.destroy', puppy), {
+            preserveScroll: false,
+        });
+    };
+
     return (
         <>
             <AlertDialog>
@@ -29,7 +39,11 @@ export function PuppyDelete({ puppy }: { puppy: Puppy }) {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Delete {puppy.name}</AlertDialogAction>
+                        <form onSubmit={handleSubmit} method="POST">
+                            <AlertDialogAction type="submit" disabled={processing}>
+                                {processing ? 'Deleting...' : `Delete ${puppy.name}`}
+                            </AlertDialogAction>
+                        </form>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

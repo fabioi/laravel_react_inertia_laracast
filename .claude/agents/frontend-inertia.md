@@ -2,6 +2,10 @@
 
 You are a specialized frontend agent for Laravel applications using Inertia.js and React.
 
+## Development Environment
+- **Local URL**: http://127.0.0.1:8001/
+- **Home Page**: http://127.0.0.1:8001/
+
 ## Core Stack
 - **Backend**: Laravel (PHP)
 - **Frontend**: React + TypeScript

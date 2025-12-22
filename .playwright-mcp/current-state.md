@@ -1,0 +1,110 @@
+### New console messages
+- [LOG] 🔍 Browser logger active (MCP server detected). Posting to: http://127.0.0.1:8001/_boost/brows...
+- [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/rea...
+
+### Page state
+- Page URL: http://127.0.0.1:8001/
+- Page Title: - Laravel
+- Page Snapshot:
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - banner [ref=e5]:
+      - generic [ref=e6]:
+        - link "DevPups Dev Pups" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]:
+            - img "DevPups" [ref=e9]
+            - paragraph [ref=e10]: Dev Pups
+        - link "Log in" [ref=e11] [cursor=pointer]:
+          - /url: http://127.0.0.1:8001/login
+      - generic [ref=e12]:
+        - heading "We've got the best puppies!" [level=1] [ref=e13]
+        - paragraph [ref=e14]: Don't take our word — let the pictures do the talking :)
+        - paragraph [ref=e15]:
+          - link "Sign in" [ref=e16] [cursor=pointer]:
+            - /url: http://127.0.0.1:8001/login
+          - text: to keep track of your favorite puppies and add new ones!
+    - main [ref=e17]:
+      - generic [ref=e19]:
+        - text: Search for a character trait
+        - generic [ref=e20]:
+          - textbox "Search for a character trait" [ref=e21]:
+            - /placeholder: playful...
+          - button [ref=e22]:
+            - img [ref=e23]
+      - list [ref=e27]:
+        - listitem [ref=e28]:
+          - button "Delete sdada" [ref=e30]:
+            - img
+          - img "sdada" [ref=e31]
+          - generic [ref=e32]:
+            - generic [ref=e33]:
+              - paragraph [ref=e34]: sdada
+              - generic [ref=e35]: ·
+              - paragraph [ref=e36]: asdasdas
+            - button [disabled] [ref=e38]:
+              - img [ref=e39]
+        - listitem [ref=e41]:
+          - button "Delete Nacho" [ref=e43]:
+            - img
+          - img "Nacho" [ref=e44]
+          - generic [ref=e45]:
+            - generic [ref=e46]:
+              - paragraph [ref=e47]: Nacho
+              - generic [ref=e48]: ·
+              - paragraph [ref=e49]: Cheesy personality
+            - button [disabled] [ref=e51]:
+              - img [ref=e52]
+        - listitem [ref=e54]:
+          - button "Delete Oreo" [ref=e56]:
+            - img
+          - img "Oreo" [ref=e57]
+          - generic [ref=e58]:
+            - generic [ref=e59]:
+              - paragraph [ref=e60]: Oreo
+              - generic [ref=e61]: ·
+              - paragraph [ref=e62]: Black and white
+            - button [disabled] [ref=e64]:
+              - img [ref=e65]
+        - listitem [ref=e67]:
+          - button "Delete Snickers" [ref=e69]:
+            - img
+          - img "Snickers" [ref=e70]
+          - generic [ref=e71]:
+            - generic [ref=e72]:
+              - paragraph [ref=e73]: Snickers
+              - generic [ref=e74]: ·
+              - paragraph [ref=e75]: Makes you laugh
+            - button [disabled] [ref=e77]:
+              - img [ref=e78]
+        - listitem [ref=e80]:
+          - button "Delete Skittles" [ref=e82]:
+            - img
+          - img "Skittles" [ref=e83]
+          - generic [ref=e84]:
+            - generic [ref=e85]:
+              - paragraph [ref=e86]: Skittles
+              - generic [ref=e87]: ·
+              - paragraph [ref=e88]: Colorful character
+            - button [disabled] [ref=e90]:
+              - img [ref=e91]
+        - listitem [ref=e93]:
+          - button "Delete Pancake" [ref=e95]:
+            - img
+          - img "Pancake" [ref=e96]
+          - generic [ref=e97]:
+            - generic [ref=e98]:
+              - paragraph [ref=e99]: Pancake
+              - generic [ref=e100]: ·
+              - paragraph [ref=e101]: Flat and fluffy
+            - button [disabled] [ref=e103]:
+              - img [ref=e104]
+      - generic [ref=e106]:
+        - paragraph [ref=e107]: page 1 of 19
+        - link "Next" [ref=e109] [cursor=pointer]:
+          - /url: http://127.0.0.1:8001/?page=2
+          - generic [ref=e110]: Next
+          - img
+  - region "Notifications alt+T"
+```
